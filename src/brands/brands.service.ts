@@ -8,16 +8,11 @@ import { v4 as uuid } from 'uuid';
 export class BrandsService {
 
   private brands: Brand[] = [
-    {
-      'id': uuid(),
-      'name': 'toyota',
-      'createAt': new Date().getTime(),
-    },
-    {
-      'id': uuid(),
-      'name': 'jeep',
-      'createAt': new Date().getTime(),
-    }
+    // {
+    //   'id': uuid(),
+    //   'name': 'toyota',
+    //   'createAt': new Date().getTime(),
+    // }
   ];
 
   create(createBrandDto: CreateBrandDto): Brand {
@@ -61,5 +56,9 @@ export class BrandsService {
   remove(id: string): void {
     const brand = this.findOne(id);
     this.brands = this.brands.filter(brand => brand.id !== id)
+  }
+
+  fillService(pBrands: Brand[]): void {
+    this.brands = pBrands;
   }
 }

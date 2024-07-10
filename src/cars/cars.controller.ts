@@ -28,13 +28,13 @@ export class CarsController {
     @Post()
     createCar(@Body() body: CreateCarDTO) {
         console.log(body);
-        const car = this.carsService.addCar(body);
+        const car = this.carsService.create(body);
         return car;
     }
 
     @Patch(':id')
     updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() body: UpdateCarDTO) {
-        const cars = this.carsService.updateCar(id, body);
+        const cars = this.carsService.update(id, body);
         return cars;
     }
 
@@ -44,6 +44,6 @@ export class CarsController {
             throw new NotFoundException(`Car with id '${id}, was not found'`);
         }
 
-        return this.carsService.deleteCar(id);
+        return this.carsService.remove(id);
     }
 }

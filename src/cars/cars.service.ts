@@ -2,13 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { UpdateCarDTO } from './dto/update_car.dto';
 import { CreateCarDTO } from './dto/create_car.dto';
+import { Car } from './interfaces/car.interface';
 
 @Injectable()
 export class CarsService {
-    private cars: CarInterface[] = [
-        { 'id': uuid(), 'brand': 'Toyota', 'model': 'CRV' },
-        { 'id': uuid(), 'brand': 'Ford', 'model': 'Escape' },
-        { 'id': uuid(), 'brand': 'Honda', 'model': 'Civic' },
+    private cars: Car[] = [
+        // { 'id': uuid(), 'brand': 'Toyota', 'model': 'CRV' },
+        // { 'id': uuid(), 'brand': 'Ford', 'model': 'Escape' },
+        // { 'id': uuid(), 'brand': 'Honda', 'model': 'Civic' },
     ];
 
     findAll(): {}[] {
@@ -24,14 +25,14 @@ export class CarsService {
         return car;
     }
 
-    addCar(body: CreateCarDTO): CarInterface {
-        const car: CarInterface = { id: uuid(), ...body };
+    create(body: CreateCarDTO): Car {
+        const car: Car = { id: uuid(), ...body };
         this.cars.push(car);
 
         return car;
     }
 
-    updateCar(id: string, body: UpdateCarDTO): CarInterface {
+    update(id: string, body: UpdateCarDTO): Car {
         if (body.id && id != body.id) {
             throw new NotFoundException(`Car id and updated body id don't match`);
         }
@@ -48,8 +49,12 @@ export class CarsService {
         return carDB;
     }
 
-    deleteCar(id: string): void {
+    remove(id: string): void {
         const carDB = this.findOneById(id);
         this.cars = this.cars.filter(car => car.id != id);
+    }
+
+    fillService(pCars: Car[]): void {
+        this.cars = pCars;
     }
 }
